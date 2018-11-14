@@ -100,7 +100,7 @@ def get_main_url(temp_url):
     :return: main_url
     """
     # data.video_list.video_1.main_url
-    main_info = requests.get(temp_url)
+    main_info = requests.get(temp_url, timeout=30)
     json_data = json.loads(main_info.text)
     # 获取
     main_url = json_data.get("data", dict()).get("video_list", dict()).get("video_1", dict()).get("main_url")
