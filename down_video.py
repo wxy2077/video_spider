@@ -93,35 +93,29 @@ def parse_detail():
         time.sleep(random.uniform(5, 8))
 
 
-# 以下三个函数是用过分析JS， 逆向还原 源视频 .mp4url的生成过程
-def right_shift(val, n):
-    return val >> n if val >= 0 else (val + 0x100000000) >> n
-
-
-def parse_video_json(url):
-    html = requests.get(url, timeout=360)
-    json_data = html.content.decode()
-    dict_str = json.loads(json_data)
-    data_str = dict_str['data']
-    dict_video_list = data_str['video_list']
-    dict_video1 = dict_video_list['video_1']
-    main_url = dict_video1['main_url']
+def get_main_url(temp_url):
+    """
+    获取main_url 数据格式中有不同清晰度的视频 video_1 是360P清晰度视频
+    :param temp_url:  demo_url: http://i.snssdk.com/video/urls/1/toutiao/mp4/v02004d10000bfhquksuatle7ofug3v0
+    :return: main_url
+    """
+    # data.video_list.video_1.main_url
+    main_info = requests.get(temp_url)
+    json_data = json.loads(main_info.text)
+    # 获取
+    main_url = json_data.get("data", dict()).get("video_list", dict()).get("video_1", dict()).get("main_url")
     return main_url
 
 
 def get_toutiao_video_url(video_id):
     """
-    传入头条视频的id 解析出头条的视频url
+    获取原视频链接
     :param video_id:
-    :return: video_url
+    :return:
     """
-    r = str(random.random())[2:]
-    url = 'http://i.snssdk.com/video/urls/v/1/toutiao/mp4/{}'.format(video_id)
-    n = requests.get(url).request.path_url + '?r=' + r   # 获取url路径
-    c = binascii.crc32(n.encode())
-    s = right_shift(c, 0)
-    main_video_url = parse_video_json(url + '?r={}&s={}'.format(r, s))
-    video_url = base64.b64decode(main_video_url)
+    v_url = "http://i.snssdk.com/video/urls/1/toutiao/mp4/{}".format(video_id)
+    main_url = get_main_url(v_url)
+    video_url = base64.b64decode(main_url)
     return video_url.decode()
 
 
