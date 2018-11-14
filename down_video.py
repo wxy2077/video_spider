@@ -15,7 +15,7 @@ import random
 
 import binascii
 import uuid
-from urllib.parse import urlparse
+# from urllib.parse import urlparse
 
 import requests
 import time
@@ -82,7 +82,7 @@ def parse_detail():
             if video_id:
                 video_url = get_toutiao_video_url(video_id)
                 with requests.get(video_url, stream=True) as r:
-                    # uuid4 生成不重复的视频名字， 怕重复可以加上时间戳
+                    # uuid4 生成不重复的视频名字， 也可以从json数据里面 提取出视频的源名称
                     video_name = "./"+str(uuid.uuid4())+".mp4"
                     with open(video_name, "wb") as f:
                         # 保存视频字节流
@@ -116,11 +116,11 @@ def get_toutiao_video_url(video_id):
     :return: video_url
     """
     r = str(random.random())[2:]
-    url = 'http://i.snssdk.com/video/urls/v/1/toutiao/mp4/%s' % video_id
-    n = urlparse(url).path + '?r=' + r
+    url = 'http://i.snssdk.com/video/urls/v/1/toutiao/mp4/{}'.format(video_id)
+    n = requests.get(url).request.path_url + '?r=' + r   # 获取url路径
     c = binascii.crc32(n.encode())
     s = right_shift(c, 0)
-    main_video_url = parse_video_json(url + '?r=%s&s=%s' % (r, s))
+    main_video_url = parse_video_json(url + '?r={}&s={}'.format(r, s))
     video_url = base64.b64decode(main_video_url)
     return video_url.decode()
 
