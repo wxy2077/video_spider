@@ -7,3 +7,6 @@
   - 2 循环列表页，访问详细页， 通过正则获取videoId.
   - 3 通过接口 http://i.snssdk.com/video/urls/1/toutiao/mp4/{videoId} 获取原视频详细信息： 如 http://i.snssdk.com/video/urls/1/toutiao/mp4/v02004d10000bfhquksuatle7ofug3v0
   - 4 原视频详细信息，有不同清晰度的，选择一个清晰度的main_url 然后base64解码 就得到了原视频链接，注意原视频链接是有时间限制的。
+  
+#### 新增腾讯视频 原始url 源视频连接获取方式
+- tencent_video.py
