@@ -9,4 +9,4 @@
   - 4 原视频详细信息，有不同清晰度的，选择一个清晰度的main_url 然后base64解码 就得到了原视频链接，注意原视频链接是有时间限制的。
   
 #### 新增腾讯视频 原始url 源视频连接获取方式
-- tencent_video.py
+- [tencent_video.py](https://github.com/wgPython/Toutiao_spider/blob/master/tencent_video)
