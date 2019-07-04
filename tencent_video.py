@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 # @Author: wgPython
 # @Time: 2018/10/22 16:11
-# @Desc: 
+# @Desc: 腾讯视频
 """
 根据腾讯视频vid 找出源视频
 
