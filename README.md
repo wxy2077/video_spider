@@ -1,5 +1,4 @@
 # video_spider
-抓取各平台源视频
 
 ## 声明:仅供学习使用，切勿用于其他用途
 
@@ -89,3 +88,7 @@
 ```
 
 </details>
+
+## m3u8 视频下载
+
+[m3u8_down 仅供参考](./m3u8_download/README.md)
